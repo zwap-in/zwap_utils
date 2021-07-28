@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'interface/currentState.dart';
-import 'native/factoryNative.dart' if (dart.library.html) 'web/factory_web.dart';
+import 'native/factoryNative.dart' if (dart.library.html) 'web/factoryWeb.dart';
 
 import 'translate.dart';
 import 'constants.dart';
