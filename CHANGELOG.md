@@ -9,3 +9,7 @@
 ## 0.0.3
 
 * Added API utils class
+
+## 0.0.4
+
+* Removed the mandatory translation from the constants class for the dates names
