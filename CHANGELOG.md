@@ -5,3 +5,7 @@
 ## 0.0.2
 
 * Fixed import on utils.dart
+
+## 0.0.3
+
+* Added API utils class
