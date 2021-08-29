@@ -1,6 +1,7 @@
 /// IMPORTING THIRD PARTY PACKAGES
 import 'dart:io';
 import 'dart:math';
+import 'package:quiver/iterables.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -105,6 +106,10 @@ class Utils{
   static double roundDouble(double value, int places){
     num mod = pow(10.0, places);
     return ((value * mod).round().toDouble() / mod);
+  }
+
+  List<List<dynamic>> partElements(List<dynamic> elements, int number) {
+   return partition(elements, number).toList();
   }
 }
 

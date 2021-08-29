@@ -5,6 +5,7 @@ import 'dart:html' as html;
 import 'dart:js' as js;
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 /// IMPORTING LOCAL PACKAGES
 import 'package:zwap_utils/zwap_utils/interface/currentState.dart';
@@ -61,6 +62,11 @@ class CurrentStateWeb extends CurrentState{
   @override
   void openExternalUrl(String newUrl){
     return this.globalCallMethod('open', [newUrl]);
+  }
+
+  @override
+  void configureApp(){
+    setUrlStrategy(PathUrlStrategy());
   }
 
 }

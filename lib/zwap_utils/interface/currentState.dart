@@ -15,4 +15,7 @@ abstract class CurrentState{
 
   /// Open external url
   void openExternalUrl(String newUrl);
+
+  /// Configure app url strategy
+  void configureApp();
 }

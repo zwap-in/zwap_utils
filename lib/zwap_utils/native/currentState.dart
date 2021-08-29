@@ -31,4 +31,9 @@ class CurrentStateNative extends CurrentState{
     throw UnimplementedError();
   }
 
+  @override
+  void configureApp(){
+    throw UnimplementedError();
+  }
+
 }
