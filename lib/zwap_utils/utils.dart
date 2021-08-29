@@ -108,7 +108,8 @@ class Utils{
     return ((value * mod).round().toDouble() / mod);
   }
 
-  List<List<dynamic>> partElements(List<dynamic> elements, int number) {
+  /// Split a list in chunks
+  static List<List<dynamic>> chunksList(List<dynamic> elements, int number) {
    return partition(elements, number).toList();
   }
 }
