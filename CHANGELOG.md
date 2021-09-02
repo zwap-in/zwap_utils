@@ -13,3 +13,4 @@
 ## 0.0.4
 
 * Removed the mandatory translation from the constants class for the dates names
+

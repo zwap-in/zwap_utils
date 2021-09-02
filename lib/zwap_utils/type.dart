@@ -22,3 +22,10 @@ extension DateTimeExtension on DateTime {
     );
   }
 }
+
+/// It capitalizes the first letter on a string
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
