@@ -10,8 +10,17 @@ import 'package:zwap_utils/zwap_utils/interface/currentState.dart';
 class CurrentStateNative extends CurrentState{
 
   @override
-  String getCurrentLocation() {
-    // TODO: implement getCurrentLocation
+  String getFullPath() {
+    throw UnimplementedError();
+  }
+
+  @override
+  String getCurrentOrigin(){
+    throw UnimplementedError();
+  }
+
+  @override
+  String? findSubDomain(String protocol, String currentDomain){
     throw UnimplementedError();
   }
 
@@ -33,6 +42,21 @@ class CurrentStateNative extends CurrentState{
 
   @override
   void configureApp(){
+    throw UnimplementedError();
+  }
+
+  @override
+  String buildArgs(Map<String, String> args) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Map<String, String> getArgs() {
+    throw UnimplementedError();
+  }
+
+  @override
+  String? currentPath(){
     throw UnimplementedError();
   }
 

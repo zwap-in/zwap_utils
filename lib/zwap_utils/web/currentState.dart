@@ -14,8 +14,22 @@ import 'package:zwap_utils/zwap_utils/interface/currentState.dart';
 class CurrentStateWeb extends CurrentState{
 
   @override
-  String getCurrentLocation() {
+  String getFullPath() {
     return html.window.location.href;
+  }
+
+  @override
+  String getCurrentOrigin(){
+    return html.window.location.origin;
+  }
+
+  @override
+  String? findSubDomain(String protocol, String currentDomain){
+    String currentOrigin = this.getCurrentOrigin();
+    String result = currentOrigin.split(protocol)[1].split(currentDomain)[0].split(".")[0];
+    if(result.trim() != ""){
+      return result;
+    }
   }
 
   @override
@@ -23,7 +37,7 @@ class CurrentStateWeb extends CurrentState{
     return js.context.callMethod(method, args);
   }
 
-  /// It parse a map inside a string args
+  @override
   String buildArgs(Map<String, String> args){
     String queryArgs = "";
     queryArgs += "?";
@@ -34,9 +48,9 @@ class CurrentStateWeb extends CurrentState{
     return queryArgs;
   }
 
-  /// It retrieves the args from the current location inside in a map
+  @override
   Map<String, String> getArgs(){
-    String currentUrl = this.getCurrentLocation();
+    String currentUrl = this.getFullPath();
     Map<String, String> finalParams = {};
     List<String> params = currentUrl.split("?");
     if(params.length > 1){
@@ -56,7 +70,7 @@ class CurrentStateWeb extends CurrentState{
     developer.log("Changing screen to $name");
     String screenArgs = args != null ? this.buildArgs(args) : "";
     html.window.history.pushState("", "", "$name$screenArgs");
-    Navigator.pushReplacementNamed(context, "/$name$screenArgs");
+    html.window.location.href = "$name$screenArgs";
   }
 
   @override
@@ -67,6 +81,11 @@ class CurrentStateWeb extends CurrentState{
   @override
   void configureApp(){
     setUrlStrategy(PathUrlStrategy());
+  }
+
+  @override
+  String? currentPath(){
+    return html.window.location.pathname;
   }
 
 }
