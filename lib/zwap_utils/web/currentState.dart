@@ -75,7 +75,7 @@ class CurrentStateWeb extends CurrentState{
 
   @override
   void openExternalUrl(String newUrl){
-    return this.globalCallMethod('open', [newUrl]);
+    html.window.location.href = newUrl;
   }
 
   @override
