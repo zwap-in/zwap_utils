@@ -23,9 +23,19 @@ extension DateTimeExtension on DateTime {
   }
 }
 
-/// It capitalizes the first letter on a string
+/// It adds some extensions method on String type
 extension StringExtension on String {
+
+  /// It capitalizes the first letter on a string
   String capitalize() {
     return "${this[0].toUpperCase()}${this.substring(1)}";
   }
+
+  /// It renders the flag in base of the string name
+  String flagChar(){
+    return this.toUpperCase().replaceAllMapped(RegExp(r'[A-Z]'),
+            (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397)
+    );
+  }
 }
+
