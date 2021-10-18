@@ -66,10 +66,15 @@ class CurrentStateWeb extends CurrentState{
   }
 
   @override
+  void pushHistoryState(String screenName, String args){
+    html.window.history.pushState("", "", "$screenName$args");
+  }
+
+  @override
   void goToScreen(String name, BuildContext context, Map<String, String>? args){
     developer.log("Changing screen to $name");
     String screenArgs = args != null ? this.buildArgs(args) : "";
-    html.window.history.pushState("", "", "$name$screenArgs");
+    this.pushHistoryState(name, screenArgs);
     html.window.location.href = "$name$screenArgs";
   }
 

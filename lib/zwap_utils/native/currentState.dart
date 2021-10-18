@@ -30,6 +30,11 @@ class CurrentStateNative extends CurrentState{
   }
 
   @override
+  void pushHistoryState(String screenName, String args){
+    /// TODO: implement globalCallMethod
+  }
+
+  @override
   void goToScreen(String screenName, BuildContext context, Map<String, String>? args){
     developer.log("Changing screen to $screenName");
     Navigator.pushReplacementNamed(context, "/$screenName");

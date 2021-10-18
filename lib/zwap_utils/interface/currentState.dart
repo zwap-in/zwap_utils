@@ -16,6 +16,9 @@ abstract class CurrentState{
   /// It retrieves the current subDomain
   String? findSubDomain(String protocol, String currentDomain);
 
+  /// It pushes the history paths state
+  void pushHistoryState(String name, String args);
+
   /// It goes to another screen with optionally custom args
   void goToScreen(String name, BuildContext context, Map<String, String>? args);
 
