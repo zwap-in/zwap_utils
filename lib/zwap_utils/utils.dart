@@ -112,5 +112,11 @@ class Utils{
   static List<List<dynamic>> chunksList(List<dynamic> elements, int number) {
    return partition(elements, number).toList();
   }
+
+  /// It generates a random boolean value
+  static bool generateRandomBoolean(){
+    Random randomNumberGenerator = Random();
+    return randomNumberGenerator.nextBool();
+  }
 }
 
