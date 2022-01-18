@@ -1,4 +1,5 @@
 /// IMPORTING THIRD PARTY PACKAGES
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
@@ -10,7 +11,7 @@ enum ApiType{
   GET,
   DELETE,
   PATCH,
-  OPTIONS
+  HEAD
 }
 
 /// The base class to call any endpoint
@@ -31,7 +32,7 @@ class ApiService{
 
   ApiService({
     required this.baseUrl,
-    required this.headerAuthKey
+    required this.headerAuthKey,
   });
 
   /// It gets the correct apiType name in base of the current ApiType
@@ -47,20 +48,23 @@ class ApiService{
         return "DELETE";
       case ApiType.PATCH:
         return "PATCH";
-      case ApiType.OPTIONS:
-        return "OPTIONS";
+      case ApiType.HEAD:
+        return "HEAD";
     }
   }
 
   /// Make a get API call
-  Future<http.Response> get(String endpoint, String? token, Map<String, String>? queryData){
+  Future<http.Response> head(String endpoint, String? token,
+      Map<String, String>? queryData,
+      ){
     developer.log(
         'Calling endpoint ' + endpoint,
         name: "API SERVICE LOG"
     );
     String finalUrl = this.baseUrl + "/" + endpoint;
+    Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     if(token != null){
-      this.defaultHeaders[this.headerAuthKey] = token;
+      headers[this.headerAuthKey] = "Token $token";
     }
     if(queryData != null){
       finalUrl += "?";
@@ -69,50 +73,97 @@ class ApiService{
       });
       finalUrl = finalUrl.substring(0, finalUrl.length - 1);
     }
-    return http.get(Uri.parse(finalUrl), headers: this.defaultHeaders);
+    return http.head(Uri.parse(finalUrl), headers: headers);
+  }
+
+  /// Make a get API call
+  Future<http.Response> get(String endpoint, String? token,
+      Map<String, String>? queryData){
+    developer.log(
+        'Calling endpoint ' + endpoint,
+        name: "API SERVICE LOG"
+    );
+    Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
+    String finalUrl = this.baseUrl + "/" + endpoint;
+    if(token != null){
+      headers[this.headerAuthKey] = "Token $token";
+    }
+    if(queryData != null){
+      finalUrl += "?";
+      queryData.forEach((key, value) {
+        finalUrl += "$key=$value&";
+      });
+      finalUrl = finalUrl.substring(0, finalUrl.length - 1);
+    }
+    return http.get(Uri.parse(finalUrl), headers: headers);
   }
 
   /// Make a put API call
-  Future<http.Response> put(String endpoint, Map<String, dynamic> body, String? token){
+  Future<http.Response> put(String endpoint, Map<String, dynamic> body,
+      String? token){
     developer.log(
         'Calling endpoint ' + endpoint,
         name: "API SERVICE LOG"
     );
+    Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if(token != null){
-      this.defaultHeaders[this.headerAuthKey] = token;
+      headers[this.headerAuthKey] = "Token $token";
     }
-    return http.put(Uri.parse(finalUrl), headers: this.defaultHeaders, body: body);
+    String data = jsonEncode(body);
+    return http.put(Uri.parse(finalUrl), headers: headers, body: data);
+  }
+
+  /// Make a patch API call
+  Future<http.Response> patch(String endpoint, Map<String, dynamic> body,
+      String? token){
+    developer.log(
+        'Calling endpoint ' + endpoint,
+        name: "API SERVICE LOG"
+    );
+    Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
+    String finalUrl = this.baseUrl + "/" + endpoint;
+    if(token != null){
+      headers[this.headerAuthKey] = "Token $token";
+    }
+    String data = jsonEncode(body);
+    return http.patch(Uri.parse(finalUrl), headers: headers, body: data);
   }
 
   /// Make a delete API call
-  Future<http.Response> delete(String endpoint, String? token){
+  Future<http.Response> delete(String endpoint, String? token,
+      Map<String, dynamic>? deleteData){
     developer.log(
         'Calling endpoint ' + endpoint,
         name: "API SERVICE LOG"
     );
+    Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if(token != null){
-      this.defaultHeaders[this.headerAuthKey] = token;
+      headers[this.headerAuthKey] = "Token $token";
     }
-    return http.delete(Uri.parse(finalUrl), headers: this.defaultHeaders);
+    String data = jsonEncode(deleteData);
+    return http.delete(Uri.parse(finalUrl), headers: headers, body: data);
   }
 
   /// Make an API post call
-  Future<http.Response> post(String endpoint, Map<String, dynamic> body, String? token){
+  Future<http.Response> post(String endpoint, Map<String, dynamic> body,
+      String? token){
     developer.log(
         'Calling endpoint ' + endpoint,
         name: "API SERVICE LOG"
     );
+    Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if(token != null){
-      this.defaultHeaders[this.headerAuthKey] = token;
+      headers[this.headerAuthKey] = "Token $token";
     }
-    return http.post(Uri.parse(finalUrl), headers: this.defaultHeaders, body: body);
+    String data = jsonEncode(body);
+    return http.post(Uri.parse(finalUrl), headers: headers, body: data);
   }
 
   /// Make an API post multipart form call
-  Future<http.StreamedResponse> multipartRequest(String endpoint, File fileAsset, String? fileName,
+  Future<http.StreamedResponse> multipartRequest(String endpoint, File fileAsset, String fileFieldName, String? fileName,
       Map<String, dynamic>? body, String? token, {ApiType apiType = ApiType.POST}) async{
     String currentApiType = this.apiType(apiType);
     var request = http.MultipartRequest(currentApiType, Uri.parse(endpoint));
@@ -122,7 +173,7 @@ class ApiService{
     }
     request.files.add(
         http.MultipartFile.fromBytes(
-            'picture',
+            fileFieldName,
             fileAsset.readAsBytesSync(),
             filename: fileName
         )
@@ -131,8 +182,8 @@ class ApiService{
   }
 
   /// Call this function to simulate an interval seconds to wait before get the fake data from the fake api call
-  Future<void> simulateApiCall() async{
-    await Future.delayed(Duration(milliseconds: 80));
+  Future<void> simulateApiCall({Duration? duration}) async{
+    await Future.delayed(duration ?? Duration(milliseconds: 80));
   }
 
 }

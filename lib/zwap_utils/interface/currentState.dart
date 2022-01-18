@@ -22,6 +22,9 @@ abstract class CurrentState{
   /// It goes to another screen with optionally custom args
   void goToScreen(String name, BuildContext context, Map<String, String>? args);
 
+  /// It goes back to the previous page
+  void goBack(BuildContext context);
+
   /// Open external url
   void openExternalUrl(String newUrl);
 
@@ -36,4 +39,10 @@ abstract class CurrentState{
 
   /// It gets the current path
   String? currentPath();
+
+  /// It gets the sub domain
+  String? getSubDomain();
+
+  /// It gets the current domain
+  String? getCurrentDomain();
 }

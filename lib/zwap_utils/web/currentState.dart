@@ -75,12 +75,12 @@ class CurrentStateWeb extends CurrentState{
     developer.log("Changing screen to $name");
     String screenArgs = args != null ? this.buildArgs(args) : "";
     this.pushHistoryState(name, screenArgs);
-    html.window.location.href = "$name$screenArgs";
+    Navigator.pushReplacementNamed(context, name);
   }
 
   @override
   void openExternalUrl(String newUrl){
-    html.window.location.href = newUrl;
+    this.globalCallMethod("call", [newUrl]);
   }
 
   @override
@@ -91,6 +91,22 @@ class CurrentStateWeb extends CurrentState{
   @override
   String? currentPath(){
     return html.window.location.pathname;
+  }
+
+  @override
+  String? getSubDomain(){
+    return html.window.location.host.split('.').length > 1 ? html.window.location.host.split('.')[0] : null;
+  }
+
+  @override
+  String? getCurrentDomain(){
+    return html.window.location.hostname;
+  }
+
+  @override
+  void goBack(BuildContext context) {
+    developer.log("Go to the previous screen");
+    html.window.history.back();
   }
 
 }

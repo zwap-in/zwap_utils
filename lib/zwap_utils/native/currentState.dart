@@ -41,6 +41,11 @@ class CurrentStateNative extends CurrentState{
   }
 
   @override
+  void goBack(BuildContext context){
+    throw UnimplementedError();
+  }
+
+  @override
   void openExternalUrl(String newUrl){
     throw UnimplementedError();
   }
@@ -64,5 +69,16 @@ class CurrentStateNative extends CurrentState{
   String? currentPath(){
     throw UnimplementedError();
   }
+
+  @override
+  String? getSubDomain(){
+    throw UnimplementedError();
+  }
+
+  @override
+  String? getCurrentDomain() {
+    throw UnimplementedError();
+  }
+
 
 }

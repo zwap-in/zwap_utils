@@ -21,6 +21,16 @@ extension DateTimeExtension on DateTime {
       ),
     );
   }
+
+  /// It writes the full minute for any string format
+  String getMinute(){
+    return this.minute == 0 ? "00" : this.minute.toString();
+  }
+
+  /// It writes the full minute for any string format
+  String getHour(){
+    return this.hour == 0 ? "00" : this.hour.toString();
+  }
 }
 
 /// It adds some extensions method on String type
@@ -38,4 +48,3 @@ extension StringExtension on String {
     );
   }
 }
-

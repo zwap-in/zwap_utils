@@ -51,6 +51,9 @@ class Constants{
   }
 
   /// The regex for custom email
-  static String get emailRegex => r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*\$";
+  static String get emailRegex => r"^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$";
+
+  /// The regex for custom password
+  static String get passwordRegex => r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
 
 }

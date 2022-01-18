@@ -109,7 +109,7 @@ class Utils{
   }
 
   /// Split a list in chunks
-  static List<List<dynamic>> chunksList(List<dynamic> elements, int number) {
+  static List<List<T>> chunksList<T>(List<T> elements, int number) {
    return partition(elements, number).toList();
   }
 
