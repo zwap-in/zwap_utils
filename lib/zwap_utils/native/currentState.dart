@@ -51,6 +51,11 @@ class CurrentStateNative extends CurrentState{
   }
 
   @override
+  void openScreen(String newUrl){
+    throw UnimplementedError();
+  }
+
+  @override
   void configureApp(){
     throw UnimplementedError();
   }

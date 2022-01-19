@@ -84,6 +84,11 @@ class CurrentStateWeb extends CurrentState{
   }
 
   @override
+  void openScreen(String newUrl){
+    html.window.location.href = newUrl;
+  }
+
+  @override
   void configureApp(){
     setUrlStrategy(PathUrlStrategy());
   }

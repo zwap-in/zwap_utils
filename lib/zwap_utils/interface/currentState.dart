@@ -22,6 +22,9 @@ abstract class CurrentState{
   /// It goes to another screen with optionally custom args
   void goToScreen(String name, BuildContext context, Map<String, String>? args);
 
+  /// It goes to another screen reloading the page
+  void openScreen(String url);
+
   /// It goes back to the previous page
   void goBack(BuildContext context);
 

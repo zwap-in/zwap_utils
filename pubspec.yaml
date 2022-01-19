@@ -1,6 +1,6 @@
 name: zwap_utils
 description: A Flutter library to handle Util functions in any Zwap projects
-version: 0.0.45
+version: 0.0.47
 homepage: https://github.com/zwap-in/zwap_utils
 
 environment:
