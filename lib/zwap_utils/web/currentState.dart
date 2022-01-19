@@ -80,7 +80,7 @@ class CurrentStateWeb extends CurrentState{
 
   @override
   void openExternalUrl(String newUrl){
-    this.globalCallMethod("call", [newUrl]);
+    this.globalCallMethod("open", [newUrl]);
   }
 
   @override
