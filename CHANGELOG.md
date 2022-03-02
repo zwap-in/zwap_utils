@@ -14,3 +14,6 @@
 
 * Removed the mandatory translation from the constants class for the dates names
 
+## 0.0.48
+
+* Added extraHeaders in all api calls
