@@ -114,4 +114,12 @@ class CurrentStateWeb extends CurrentState{
     html.window.history.back();
   }
 
+  @override
+  void removeQueryArgs(){
+    String currentUrl = html.window.location.href;
+    String afterDomain = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
+    String beforeQueryString = afterDomain.split("?")[0];
+    html.window.history.pushState({}, html.document.title, "/$beforeQueryString");
+  }
+
 }

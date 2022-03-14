@@ -48,4 +48,7 @@ abstract class CurrentState{
 
   /// It gets the current domain
   String? getCurrentDomain();
+
+  /// It cleans the query args from the current url
+  void removeQueryArgs();
 }
