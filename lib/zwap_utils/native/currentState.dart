@@ -85,5 +85,9 @@ class CurrentStateNative extends CurrentState{
     throw UnimplementedError();
   }
 
+  void removeQueryArgs(){
+    throw UnimplementedError();
+  }
+
 
 }
