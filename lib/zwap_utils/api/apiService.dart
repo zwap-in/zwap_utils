@@ -42,11 +42,7 @@ class ApiService {
   }
 
   /// Make a get API call
-  Future<http.Response> head(
-    String endpoint,
-    String? token,
-    Map<String, String>? queryData,
-  ) {
+  Future<http.Response> head(String endpoint, String? token, Map<String, String>? queryData, {Map<String, dynamic> extreHeaders = const {}}) {
     developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
     String finalUrl = this.baseUrl + "/" + endpoint;
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
@@ -60,7 +56,7 @@ class ApiService {
       });
       finalUrl = finalUrl.substring(0, finalUrl.length - 1);
     }
-    return http.head(Uri.parse(finalUrl), headers: headers);
+    return http.head(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders});
   }
 
   /// Make a get API call
