@@ -68,8 +68,23 @@ class Utils {
   /// Providing `{"adjective": "Awesome", "after_string": "Save this post"}` as arguments,
   /// (with [key] == 'foo!)
   /// will return "This is my awesome string! Save this post"
-  static String translatedText(String key, [Map<String, String>? arguments]) {
-    return Utils.getIt<LocalizationClass>().dynamicValue(key);
+  ///
+  /// [arguments] have dynamic as type of value! Be carefull, .toString() will be called
+  /// to the object if it isn't already a String
+  ///
+  /// If [replaceAll] is true all the occurences will be replaced, only the first one instead
+  static String translatedText(String key, {Map<String, dynamic>? arguments, bool replaceAll = false}) {
+    if (arguments == null || arguments.isEmpty) return Utils.getIt<LocalizationClass>().dynamicValue(key);
+
+    final String _string = Utils.getIt<LocalizationClass>().dynamicValue(key);
+    for (String key in arguments.keys) {
+      if (replaceAll)
+        _string.replaceAll('{{key}}', arguments[key]!.toString());
+      else
+        _string.replaceFirst('{{key}}', arguments[key]!.toString());
+    }
+
+    return _string;
   }
 
   /// Utils function to retrieve the icon from the IconData dictionary
