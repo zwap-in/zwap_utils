@@ -17,3 +17,6 @@
 ## 0.0.48
 
 * Added extraHeaders in all api calls
+
+## 0.0.52
+* Added `arguments` argument to Utils.translatedText(...) function

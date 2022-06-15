@@ -16,8 +16,7 @@ import 'constants.dart';
 import 'icons.dart';
 
 /// Utilities class functions
-class Utils{
-
+class Utils {
   /// It retrieves the current state in base of current device
   static CurrentState get currentState => getCurrentState();
 
@@ -32,48 +31,55 @@ class Utils{
   }
 
   /// Utils function to retrieve the color hex value from a Color value
-  static String colorString(Color color){
+  static String colorString(Color color) {
     String colorString = color.toString();
     String valueString = colorString.split('(0x')[1].split(')')[0];
     return "#$valueString";
   }
 
   /// Utils function to evaluate the number from custom string
-  static int evalNumber(String text){
+  static int evalNumber(String text) {
     return int.tryParse(text) ?? -1;
   }
 
   /// Utils function to validate a regex with a dynamic value and a string
-  static bool validateRegex(String regexString, dynamic value){
+  static bool validateRegex(String regexString, dynamic value) {
     return RegExp(regexString).hasMatch(value.toString());
   }
 
   /// Utils function to retrieve the date string format from a DateTime object
-  static String getDateString(DateTime datetime){
+  static String getDateString(DateTime datetime) {
     return "${datetime.day} - ${Constants.monthlyName()[datetime.month]} - ${datetime.year}";
   }
 
   /// Utils function to register any T instance with GetIt
-  static void registerType<T extends Object>(T instance){
-    if(Utils.getIt.isRegistered<T>()){
+  static void registerType<T extends Object>(T instance) {
+    if (Utils.getIt.isRegistered<T>()) {
       Utils.getIt.unregister<T>();
     }
     Utils.getIt.registerFactory<T>(() => instance);
   }
 
   /// Utils function to retrieve the dynamic translated text in base of any key
-  static String translatedText(String key){
+  ///
+  /// If [arguments] is provided all the keyworks will be substituted, for example:
+  /// if string 'foo' is "This is my {{adjective}} string! {{after_string}}".
+  ///
+  /// Providing `{"adjective": "Awesome", "after_string": "Save this post"}` as arguments,
+  /// (with [key] == 'foo!)
+  /// will return "This is my awesome string! Save this post"
+  static String translatedText(String key, [Map<String, String>? arguments]) {
     return Utils.getIt<LocalizationClass>().dynamicValue(key);
   }
 
   /// Utils function to retrieve the icon from the IconData dictionary
-  static int iconData(String key){
+  static int iconData(String key) {
     int? codePoint = Utils.getIt<IconDataDict>().iconDict[key];
     return codePoint != null ? codePoint : -1;
   }
 
   /// Utils function to the minute to show as a String
-  static String plotMinute(int minute){
+  static String plotMinute(int minute) {
     return minute == 0 ? "${minute.toString()}0" : minute.toString();
   }
 
@@ -84,39 +90,36 @@ class Utils{
     String filePath = '';
     String myUrl = '';
     try {
-      myUrl = url+'/'+fileName;
+      myUrl = url + '/' + fileName;
       var request = await httpClient.getUrl(Uri.parse(myUrl));
       var response = await request.close();
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
         filePath = '$dir/$fileName';
         file = File(filePath);
         await file.writeAsBytes(bytes);
-      }
-      else
-        filePath = 'Error code: '+response.statusCode.toString();
-    }
-    catch(ex){
+      } else
+        filePath = 'Error code: ' + response.statusCode.toString();
+    } catch (ex) {
       filePath = 'Can not fetch url';
     }
     return filePath;
   }
 
   /// Utils functions to round a double number to two decimal position
-  static double roundDouble(double value, int places){
+  static double roundDouble(double value, int places) {
     num mod = pow(10.0, places);
     return ((value * mod).round().toDouble() / mod);
   }
 
   /// Split a list in chunks
   static List<List<T>> chunksList<T>(List<T> elements, int number) {
-   return partition(elements, number).toList();
+    return partition(elements, number).toList();
   }
 
   /// It generates a random boolean value
-  static bool generateRandomBoolean(){
+  static bool generateRandomBoolean() {
     Random randomNumberGenerator = Random();
     return randomNumberGenerator.nextBool();
   }
 }
-
