@@ -1,6 +1,6 @@
 name: zwap_utils
 description: A Flutter library to handle Util functions in any Zwap projects
-version: 0.0.53
+version: 0.0.54
 homepage: https://github.com/zwap-in/zwap_utils
 
 environment:
@@ -8,12 +8,13 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-
   flutter:
     sdk: flutter
 
   flutter_web_plugins:
     sdk: flutter
+
+
 
   get_it: ^7.1.3
 

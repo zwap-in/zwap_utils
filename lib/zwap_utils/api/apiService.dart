@@ -15,13 +15,14 @@ class ApiService {
   /// The final auth key to call authenticated endpoints
   final String headerAuthKey;
 
+  final http.Client? _mockClient;
+
   /// The default custom headers
   Map<String, String> defaultHeaders = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Cache-Control': 'no-cache'};
 
-  ApiService({
-    required this.baseUrl,
-    required this.headerAuthKey,
-  });
+  ApiService({required this.baseUrl, required this.headerAuthKey}) : this._mockClient = null;
+
+  ApiService.mock({required this.baseUrl, required this.headerAuthKey, required http.Client client}) : this._mockClient = client;
 
   /// It gets the correct apiType name in base of the current ApiType
   String apiType(ApiType apiType) {
@@ -56,6 +57,11 @@ class ApiService {
       });
       finalUrl = finalUrl.substring(0, finalUrl.length - 1);
     }
+
+    if (_mockClient != null) {
+      return _mockClient!.head(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders});
+    }
+
     return http.head(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders});
   }
 
@@ -74,6 +80,11 @@ class ApiService {
       });
       finalUrl = finalUrl.substring(0, finalUrl.length - 1);
     }
+
+    if (_mockClient != null) {
+      return _mockClient!.get(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders});
+    }
+
     return http.get(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders});
   }
 
@@ -88,6 +99,11 @@ class ApiService {
       headers[this.headerAuthKey] = "Token $token";
     }
     String data = jsonEncode(body);
+
+    if (_mockClient != null) {
+      return _mockClient!.put(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
+    }
+
     return http.put(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
   }
 
@@ -102,6 +118,11 @@ class ApiService {
       headers[this.headerAuthKey] = "Token $token";
     }
     String data = jsonEncode(body);
+
+    if (_mockClient != null) {
+      return _mockClient!.patch(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
+    }
+
     return http.patch(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
   }
 
@@ -116,6 +137,11 @@ class ApiService {
       headers[this.headerAuthKey] = "Token $token";
     }
     String data = jsonEncode(deleteData);
+
+    if (_mockClient != null) {
+      return _mockClient!.delete(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
+    }
+
     return http.delete(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
   }
 
@@ -130,6 +156,11 @@ class ApiService {
       headers[this.headerAuthKey] = "Token $token";
     }
     String data = jsonEncode(body);
+
+    if (_mockClient != null) {
+      return _mockClient!.post(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
+    }
+
     return http.post(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
   }
 
@@ -144,10 +175,17 @@ class ApiService {
       headers[this.headerAuthKey] = "Token $token";
     }
     String data = jsonEncode(body);
+
+    if (_mockClient != null) {
+      return _mockClient!.post(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
+    }
+
     return http.post(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
   }
 
   /// Make an API post multipart form call
+  ///
+  /// ! Do not support mockClient
   Future<http.StreamedResponse> multipartRequest(
       String endpoint, File fileAsset, String fileFieldName, String? fileName, Map<String, dynamic>? body, String? token,
       {ApiType apiType = ApiType.POST}) async {

@@ -20,3 +20,6 @@
 
 ## 0.0.53
 * Added `arguments` and `replaceAll` argument to Utils.translatedText(...) function
+
+## 0.0.54
+* Added .mock(...) constructor to ApiService with support for mock client use
