@@ -23,3 +23,6 @@
 
 ## 0.0.54
 * Added .mock(...) constructor to ApiService with support for mock client use
+
+## 0.0.55
+* Fixed a problem in translatedText(...) method

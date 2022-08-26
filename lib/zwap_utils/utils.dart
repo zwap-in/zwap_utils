@@ -79,9 +79,9 @@ class Utils {
     final String _string = Utils.getIt<LocalizationClass>().dynamicValue(key);
     for (String key in arguments.keys) {
       if (replaceAll)
-        _string.replaceAll('{{key}}', arguments[key]!.toString());
+        _string.replaceAll('{{$key}}', arguments[key]!.toString());
       else
-        _string.replaceFirst('{{key}}', arguments[key]!.toString());
+        _string.replaceFirst('{{$key}}', arguments[key]!.toString());
     }
 
     return _string;
