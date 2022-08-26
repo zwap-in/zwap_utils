@@ -26,3 +26,6 @@
 
 ## 0.0.55
 * Fixed a problem in translatedText(...) method
+
+## 0.0.56
+* Fixed an other problem in translatedText(...) method
