@@ -60,7 +60,7 @@ class ApiService {
 
   /// Make a get API call
   Future<http.Response> head(String endpoint, String? token, Map<String, String>? queryData, {Map<String, dynamic> extreHeaders = const {}}) {
-    developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
+    _log(endpoint);
     String finalUrl = this.baseUrl + "/" + endpoint;
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     if (token != null) {
@@ -83,7 +83,7 @@ class ApiService {
 
   /// Make a get API call
   Future<http.Response> get(String endpoint, String? token, Map<String, String>? queryData, {Map<String, dynamic> extreHeaders = const {}}) {
-    developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
+    _log(endpoint);
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if (token != null) {
@@ -108,7 +108,7 @@ class ApiService {
   ///
   /// Extre headers are added after normal headers, so overwrite from extraHeaders is possibile
   Future<http.Response> put(String endpoint, Map<String, dynamic> body, String? token, {Map<String, dynamic> extreHeaders = const {}}) {
-    developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
+    _log(endpoint);
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if (token != null) {
@@ -127,7 +127,7 @@ class ApiService {
   ///
   /// Extre headers are added after normal headers, so overwrite from extraHeaders is possibile
   Future<http.Response> patch(String endpoint, Map<String, dynamic> body, String? token, {Map<String, dynamic> extreHeaders = const {}}) {
-    developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
+    _log(endpoint);
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if (token != null) {
@@ -146,7 +146,7 @@ class ApiService {
   ///
   /// Extre headers are added after normal headers, so overwrite from extraHeaders is possibile
   Future<http.Response> delete(String endpoint, String? token, Map<String, dynamic>? deleteData, {Map<String, dynamic> extreHeaders = const {}}) {
-    developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
+    _log(endpoint);
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if (token != null) {
@@ -165,7 +165,7 @@ class ApiService {
   ///
   /// Extre headers are added after normal headers, so overwrite from extraHeaders is possibile
   Future<http.Response> post(String endpoint, Map<String, dynamic> body, String? token, {Map<String, dynamic> extreHeaders = const {}}) {
-    developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
+    _log(endpoint);
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if (token != null) {
@@ -184,7 +184,7 @@ class ApiService {
   ///
   /// Extre headers are added after normal headers, so overwrite from extraHeaders is possibile
   Future<http.Response> postList(String endpoint, List body, String? token, {Map<String, dynamic> extreHeaders = const {}}) {
-    developer.log('Calling endpoint ' + endpoint, name: "API SERVICE LOG");
+    _log(endpoint);
     Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
     String finalUrl = this.baseUrl + "/" + endpoint;
     if (token != null) {

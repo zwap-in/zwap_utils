@@ -36,3 +36,6 @@
 ## 0.0.58
 * Improved log of ApiService
 
+## 0.0.59
+* Fixed log logics
+
