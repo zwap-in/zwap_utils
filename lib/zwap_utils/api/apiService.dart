@@ -7,6 +7,19 @@ import 'dart:developer' as developer;
 /// The different types of APIs calls
 enum ApiType { POST, PUT, GET, DELETE, PATCH, HEAD }
 
+enum ApiServiceLogLevel {
+  /// `level0`
+  ///
+  /// Disabled log
+  disabled,
+
+  /// Logs only the path of the request (not the base path)
+  level1,
+
+  /// Logs the full path of the request (including the base path)
+  level2,
+}
+
 /// The base class to call any endpoint
 class ApiService {
   /// The base URL to call before using any endpoint
@@ -17,12 +30,15 @@ class ApiService {
 
   final http.Client? _mockClient;
 
+  final ApiServiceLogLevel logLevel;
+
   /// The default custom headers
   Map<String, String> defaultHeaders = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Cache-Control': 'no-cache'};
 
-  ApiService({required this.baseUrl, required this.headerAuthKey}) : this._mockClient = null;
+  ApiService({required this.baseUrl, required this.headerAuthKey, this.logLevel = ApiServiceLogLevel.level1}) : this._mockClient = null;
 
-  ApiService.mock({required this.baseUrl, required this.headerAuthKey, required http.Client client}) : this._mockClient = client;
+  ApiService.mock({required this.baseUrl, required this.headerAuthKey, required http.Client client, this.logLevel = ApiServiceLogLevel.level1})
+      : this._mockClient = client;
 
   /// It gets the correct apiType name in base of the current ApiType
   String apiType(ApiType apiType) {
@@ -202,5 +218,18 @@ class ApiService {
   /// Call this function to simulate an interval seconds to wait before get the fake data from the fake api call
   Future<void> simulateApiCall({Duration? duration}) async {
     await Future.delayed(duration ?? Duration(milliseconds: 80));
+  }
+
+  void _log(String endpoint) {
+    switch (logLevel) {
+      case ApiServiceLogLevel.disabled:
+        break;
+      case ApiServiceLogLevel.level1:
+        developer.log('Calling endpoint $endpoint', name: "API SERVICE LOG");
+        break;
+      case ApiServiceLogLevel.level2:
+        developer.log('Calling endpoint $baseUrl/$endpoint', name: "API SERVICE LOG");
+        break;
+    }
   }
 }

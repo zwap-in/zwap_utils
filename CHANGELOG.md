@@ -29,3 +29,10 @@
 
 ## 0.0.56
 * Fixed an other problem in translatedText(...) method
+
+## 0.0.57
+* Fixed a problem in Utils.currentState.getArgs()
+
+## 0.0.58
+* Improved log of ApiService
+

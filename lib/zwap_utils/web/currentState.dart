@@ -11,34 +11,33 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:zwap_utils/zwap_utils/interface/currentState.dart';
 
 /// It manages the current state for the web devices
-class CurrentStateWeb extends CurrentState{
-
+class CurrentStateWeb extends CurrentState {
   @override
   String getFullPath() {
     return html.window.location.href;
   }
 
   @override
-  String getCurrentOrigin(){
+  String getCurrentOrigin() {
     return html.window.location.origin;
   }
 
   @override
-  String? findSubDomain(String protocol, String currentDomain){
+  String? findSubDomain(String protocol, String currentDomain) {
     String currentOrigin = this.getCurrentOrigin();
     String result = currentOrigin.split(protocol)[1].split(currentDomain)[0].split(".")[0];
-    if(result.trim() != ""){
+    if (result.trim() != "") {
       return result;
     }
   }
 
   @override
-   void globalCallMethod(String method, List args) {
+  void globalCallMethod(String method, List args) {
     return js.context.callMethod(method, args);
   }
 
   @override
-  String buildArgs(Map<String, String> args){
+  String buildArgs(Map<String, String> args) {
     String queryArgs = "";
     queryArgs += "?";
     args.forEach((key, value) {
@@ -49,11 +48,11 @@ class CurrentStateWeb extends CurrentState{
   }
 
   @override
-  Map<String, String> getArgs(){
+  Map<String, String> getArgs() {
     String currentUrl = this.getFullPath();
     Map<String, String> finalParams = {};
     List<String> params = currentUrl.split("?");
-    if(params.length > 1){
+    if (params.length > 1 && params[1].isNotEmpty) {
       params = params[1].split("&");
       params.forEach((element) {
         List<String> tmpElements = element.split("=");
@@ -66,12 +65,12 @@ class CurrentStateWeb extends CurrentState{
   }
 
   @override
-  void pushHistoryState(String screenName, String args){
+  void pushHistoryState(String screenName, String args) {
     html.window.history.pushState("", "", "$screenName$args");
   }
 
   @override
-  void goToScreen(String name, BuildContext context, Map<String, String>? args){
+  void goToScreen(String name, BuildContext context, Map<String, String>? args) {
     developer.log("Changing screen to $name");
     String screenArgs = args != null ? this.buildArgs(args) : "";
     this.pushHistoryState(name, screenArgs);
@@ -79,32 +78,32 @@ class CurrentStateWeb extends CurrentState{
   }
 
   @override
-  void openExternalUrl(String newUrl){
+  void openExternalUrl(String newUrl) {
     this.globalCallMethod("open", [newUrl]);
   }
 
   @override
-  void openScreen(String newUrl){
+  void openScreen(String newUrl) {
     html.window.location.href = newUrl;
   }
 
   @override
-  void configureApp(){
+  void configureApp() {
     setUrlStrategy(PathUrlStrategy());
   }
 
   @override
-  String? currentPath(){
+  String? currentPath() {
     return html.window.location.pathname;
   }
 
   @override
-  String? getSubDomain(){
+  String? getSubDomain() {
     return html.window.location.host.split('.').length > 1 ? html.window.location.host.split('.')[0] : null;
   }
 
   @override
-  String? getCurrentDomain(){
+  String? getCurrentDomain() {
     return html.window.location.hostname;
   }
 
@@ -115,11 +114,10 @@ class CurrentStateWeb extends CurrentState{
   }
 
   @override
-  void removeQueryArgs(){
+  void removeQueryArgs() {
     String currentUrl = html.window.location.href;
     String afterDomain = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
     String beforeQueryString = afterDomain.split("?")[0];
     html.window.history.pushState({}, html.document.title, "/$beforeQueryString");
   }
-
 }
