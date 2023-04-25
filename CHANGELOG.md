@@ -41,3 +41,6 @@
 
 ## 0.0.60
 * Added setMockClient(...) method is ApiService class
+
+## 0.0.61
+* Added mock client getter only for testing in ApiService class

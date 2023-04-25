@@ -1,6 +1,7 @@
 /// IMPORTING THIRD PARTY PACKAGES
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
@@ -33,6 +34,9 @@ class ApiService {
   http.Client? _mockClient;
 
   final ApiServiceLogLevel logLevel;
+
+  @visibleForTesting
+  http.Client? get mockClient => _mockClient;
 
   /// The default custom headers
   Map<String, String> defaultHeaders = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Cache-Control': 'no-cache'};
