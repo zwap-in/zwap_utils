@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
+import 'package:http/testing.dart';
+
 /// The different types of APIs calls
 enum ApiType { POST, PUT, GET, DELETE, PATCH, HEAD }
 
@@ -28,7 +30,7 @@ class ApiService {
   /// The final auth key to call authenticated endpoints
   final String headerAuthKey;
 
-  final http.Client? _mockClient;
+  http.Client? _mockClient;
 
   final ApiServiceLogLevel logLevel;
 
@@ -39,6 +41,10 @@ class ApiService {
 
   ApiService.mock({required this.baseUrl, required this.headerAuthKey, required http.Client client, this.logLevel = ApiServiceLogLevel.level1})
       : this._mockClient = client;
+
+  void setMockClient(http.Client? mockClient) {
+    _mockClient = mockClient;
+  }
 
   /// It gets the correct apiType name in base of the current ApiType
   String apiType(ApiType apiType) {

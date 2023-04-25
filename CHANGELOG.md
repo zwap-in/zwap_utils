@@ -39,3 +39,5 @@
 ## 0.0.59
 * Fixed log logics
 
+## 0.0.60
+* Added setMockClient(...) method is ApiService class
