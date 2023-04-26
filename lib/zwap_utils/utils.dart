@@ -17,8 +17,13 @@ import 'icons.dart';
 
 /// Utilities class functions
 class Utils {
+  static CurrentState? _instance;
+
+  @visibleForTesting
+  static set instance(CurrentState value) => _instance = value;
+
   /// It retrieves the current state in base of current device
-  static CurrentState get currentState => getCurrentState();
+  static CurrentState get currentState => _instance ??= getCurrentState();
 
   /// It retrieves the GetIt instance
   static GetIt get getIt => GetIt.instance;
