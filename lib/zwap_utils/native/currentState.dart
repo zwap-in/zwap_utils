@@ -7,87 +7,97 @@ import 'package:flutter/cupertino.dart';
 import 'package:zwap_utils/zwap_utils/interface/currentState.dart';
 
 /// It manages the state on native devices
-class CurrentStateNative extends CurrentState{
+class CurrentStateNative extends CurrentState {
+  void _warningLog() {
+    developer.log("⚠️ \x1B[33mThis methods has not been implemented yet\x1B[0m");
+  }
 
   @override
   String getFullPath() {
-    throw UnimplementedError();
+    _warningLog();
+    return "";
   }
 
   @override
-  String getCurrentOrigin(){
-    throw UnimplementedError();
+  String getCurrentOrigin() {
+    _warningLog();
+    return "";
   }
 
   @override
-  String? findSubDomain(String protocol, String currentDomain){
-    throw UnimplementedError();
+  String? findSubDomain(String protocol, String currentDomain) {
+    _warningLog();
+    return null;
   }
 
   @override
   void globalCallMethod(String method, List args) {
-    // TODO: implement globalCallMethod
+    _warningLog();
   }
 
   @override
-  void pushHistoryState(String screenName, String args){
-    /// TODO: implement globalCallMethod
+  void pushHistoryState(String screenName, String args) {
+    _warningLog();
   }
 
   @override
-  void goToScreen(String screenName, BuildContext context, Map<String, String>? args){
+  void goToScreen(String screenName, BuildContext context, Map<String, String>? args) {
     developer.log("Changing screen to $screenName");
     Navigator.pushReplacementNamed(context, "/$screenName");
   }
 
   @override
-  void goBack(BuildContext context){
-    throw UnimplementedError();
+  void goBack(BuildContext context) {
+    developer.log("Going back");
+    Navigator.pop(context);
   }
 
   @override
-  void openExternalUrl(String newUrl){
-    throw UnimplementedError();
+  void openExternalUrl(String newUrl) {
+    _warningLog();
   }
 
   @override
-  void openScreen(String newUrl){
-    throw UnimplementedError();
+  void openScreen(String newUrl) {
+    _warningLog();
   }
 
   @override
-  void configureApp(){
-    throw UnimplementedError();
+  void configureApp() {
+    _warningLog();
   }
 
   @override
   String buildArgs(Map<String, String> args) {
-    throw UnimplementedError();
+    _warningLog();
+    return "";
   }
 
   @override
   Map<String, String> getArgs() {
-    throw UnimplementedError();
+    _warningLog();
+    return {};
   }
 
   @override
-  String? currentPath(){
-    throw UnimplementedError();
+  String? currentPath() {
+    _warningLog();
+    return null;
   }
 
   @override
-  String? getSubDomain(){
-    throw UnimplementedError();
+  String? getSubDomain() {
+    _warningLog();
+    return null;
   }
 
   @override
   String? getCurrentDomain() {
-    throw UnimplementedError();
+    _warningLog();
+    return null;
   }
 
-  void removeQueryArgs(){
-    throw UnimplementedError();
+  void removeQueryArgs() {
+    _warningLog();
   }
-
-
 }

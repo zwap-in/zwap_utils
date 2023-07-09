@@ -47,3 +47,6 @@
 
 ## 0.0.62
 * Transparent edits in [Utils] logics in order to let user mock it for testing
+
+## 0.0.63
+* Replaced UnimplementedException with warning logs in native current state class
