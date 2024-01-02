@@ -209,6 +209,25 @@ class ApiService {
     return http.post(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
   }
 
+  /// Make an API post call
+  ///
+  /// Extre headers are added after normal headers, so overwrite from extraHeaders is possibile
+  Future<http.Response> putList(String endpoint, List body, String? token, {Map<String, dynamic> extreHeaders = const {}}) {
+    _log(endpoint);
+    Map<String, String> headers = new Map<String, String>.from(this.defaultHeaders);
+    String finalUrl = this.baseUrl + "/" + endpoint;
+    if (token != null) {
+      headers[this.headerAuthKey] = "Token $token";
+    }
+    String data = jsonEncode(body);
+
+    if (_mockClient != null) {
+      return _mockClient!.put(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
+    }
+
+    return http.put(Uri.parse(finalUrl), headers: {...headers, ...extreHeaders}, body: data);
+  }
+
   /// Make an API post multipart form call
   ///
   /// ! Do not support mockClient

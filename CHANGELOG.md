@@ -50,3 +50,6 @@
 
 ## 0.0.63
 * Replaced UnimplementedException with warning logs in native current state class
+
+## 0.0.64
+* Added a new method to perform a put request using a list as body to [ApiService]
